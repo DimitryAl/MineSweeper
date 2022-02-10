@@ -8,11 +8,14 @@ namespace MineSweeper
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Welcome to Minesweeper!");
             
             Field field = new Field();
             field.GenerateBombs(10);
+            field.GenerateDigits();
+            
             field.ShowField();
+
         }
 
     }
