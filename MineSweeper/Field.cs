@@ -10,6 +10,7 @@ namespace MineSweeper
     {
         static readonly int N = 9;
         int[,] cells = new int[N, N];
+        
         //public Field()
         //{  
         //}
@@ -55,7 +56,7 @@ namespace MineSweeper
             }
         }
 
-        public void ShowField()
+        public void ShowFieldCheat()
         {
             int rows = cells.GetUpperBound(0) + 1;
             int column = cells.Length / rows;
@@ -65,7 +66,24 @@ namespace MineSweeper
             {
                 for (int j = 0; j < column;j++)
                 {
-                    Console.Write($"{cells[i,j]}\t");
+                    if (cells[i, j] == -1) Console.Write("*\t");
+                    else Console.Write($"{cells[i, j]}\t");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public void ShowField()
+        {
+            int rows = cells.GetUpperBound(0) + 1;
+            int column = cells.Length / rows;
+
+            Console.WriteLine("Current state of field:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    Console.Write("#\t");
                 }
                 Console.WriteLine();
             }

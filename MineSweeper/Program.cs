@@ -13,8 +13,12 @@ namespace MineSweeper
             Field field = new Field();
             field.GenerateBombs(10);
             field.GenerateDigits();
-            
-            field.ShowField();
+            Console.WriteLine("Ready to play!");
+
+            // Cycle for playing
+            while (true)
+            {
+            }
 
         }
 
