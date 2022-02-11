@@ -121,23 +121,43 @@ namespace MineSweeper
                         case state.Bomb:
                             Console.Write("*\t");
                             break;
-
                     }
                 }
                 Console.WriteLine();
             }
         }
 
-        public void ChangeCellState(int x, int y, int input)
+        public bool ChangeCellState(int x, int y, int input, ref int mines)
         {
-            if (cells[x, y] == -1 && input == 1)
+            if (input == 2)
             {
-                cells_prop[x, y] = state.Bomb;
+                cells_prop[x, y] = state.Flag;
+                mines--;
+                return true;
             }
             else
             {
-                if (input == 2) cells_prop[x, y] = state.Flag;
-                if (input == 1) cells_prop[x, y] = state.Opened;
+                if (cells[x, y] == -1)
+                {
+                    cells_prop[x, y] = state.Bomb;
+                    return false;
+                }
+                cells_prop[x, y] = state.Opened;
+                for (int k = x - 1; k <= x + 1; k++)
+                {
+                    for (int l = y - 1; l <= y + 1; l++)
+                    {
+
+                        if (k < 0 || k > N - 1 || l < 0 || l > N - 1) continue;
+                        if (k == x && l == y) continue;
+                        if (cells[k, l] == 0 && cells_prop[k, l] != state.Opened) ChangeCellState(k, l, 1, ref mines);
+                        else
+                        {
+                            if (cells[k, l] != -1) cells_prop[k, l] = state.Opened;
+                        }
+                    }
+                }
+                return true;
             }
         }
     }
