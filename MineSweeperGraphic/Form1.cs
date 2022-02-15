@@ -60,14 +60,27 @@ namespace MineSweeperGraphic
             DrawField();
             field_drawn = true;
 
-            Generator gen = new Generator(this, pictureBox1, cells.GetUpperBound(0) + 1, cells.Length / (cells.GetUpperBound(0) + 1));
-            gen.GenerateCells(cells);
+            Generator gen = new Generator(this, pictureBox1, 
+                /*cells.GetUpperBound(0) + 1, cells.Length / (cells.GetUpperBound(0) + 1)*/N, N);
+            gen.GenerateCells(ref cells);
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    MessageBox.Show("gencells\t" + Convert.ToString(cells[i, j].x) + "__-" +Convert.ToString(cells[i, j].y));
+                    //MessageBox.Show("gencells\t" + Convert.ToString(cells[i, j].side));
+                }
+            }
             gen.GenerateBombs(mines, N, cells);
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    MessageBox.Show("genbombs\t" + Convert.ToString(cells[i, j].cell_state));
+                }
+            }
             gen.GenerateDigits(cells);
-            //for (int i = 0;i < N;i++)
-            //{
-            //    MessageBox.Show(Convert.ToString(cells[i, 0].number));
-            //}
+
             button1.Enabled = false;
         }
 
@@ -86,24 +99,20 @@ namespace MineSweeperGraphic
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-
-            ////top left Form point
-            //int f_x = this.Location.X;
-            //int f_y = this.Location.Y;
-            ////position of the cursor
-            //int c_x = Cursor.Position.X;
-            //int c_y = Cursor.Position.Y;
-            ////top left point of PictureBox
-            //int p_x = pictureBox1.Location.X + 10;
-            //int p_y = pictureBox1.Location.Y + 30;
-            ////side of cell
-            //int cell_side = pictureBox1.Width / 9;
-
             if (!field_drawn)
             {
                 return;
             }
             Cell cell = new();
+
+            for (int i=0; i<N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    MessageBox.Show("msclick\t"+Convert.ToString(cells[i, j].x) + Convert.ToString(cells[i, j].y));
+                }
+            }
+
             int res = cell.FindCell(this, cells, e, N, ref mines);
             if (res == 0)
             {
@@ -112,6 +121,10 @@ namespace MineSweeperGraphic
             else if (res == -1)
             {
                 MessageBox.Show("restart program!");
+            }
+            else
+            {
+                MessageBox.Show("Nice!");
             }
         }
 

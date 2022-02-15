@@ -15,18 +15,21 @@
             this.cols = cols;
         }
 
-        public void GenerateCells(Cell[,] cells)
+        public void GenerateCells(ref Cell[,] cells)
         {
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    GenerateCell(cells[i, j], i, j);
+                    //GenerateCell(cells[i, j], i, j);
+                    GenerateCell(i, j, ref cells[i, j]);
+
                 }
             }
         }
 
-        public void GenerateCell(Cell cell, int i, int j)
+        //public void GenerateCell(Cell cell, int i, int j)
+        public void GenerateCell(int i, int j, ref Cell cell)
         {
             //top left Form point
             int f_x = f.Location.X;                  
