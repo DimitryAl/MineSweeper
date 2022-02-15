@@ -2,11 +2,11 @@ namespace MineSweeperGraphic
 {
     public partial class Form1 : Form
     {
-        
+
 
         System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
         const int N = 9;
-        const int qnt = 10;
+        int mines = 10;
         bool field_drawn = false;
         Cell[,] cells = new Cell[N, N];
 
@@ -26,7 +26,7 @@ namespace MineSweeperGraphic
         {
             Pen pen = new Pen(Color.Black, 1);
             Graphics picturebox1 = Graphics.FromHwnd(pictureBox1.Handle);
-            
+
             int cell_side = pictureBox1.Width / 9;
             for (int i = 0; i < N; i++)
             {
@@ -59,16 +59,16 @@ namespace MineSweeperGraphic
 
             DrawField();
             field_drawn = true;
-            
+
             Generator gen = new Generator(this, pictureBox1, cells.GetUpperBound(0) + 1, cells.Length / (cells.GetUpperBound(0) + 1));
             gen.GenerateCells(cells);
-            gen.GenerateBombs(qnt, N, cells);
+            gen.GenerateBombs(mines, N, cells);
             gen.GenerateDigits(cells);
-            for (int i = 0;i < N;i++)
-            {
-                MessageBox.Show(Convert.ToString(cells[i, 0].number));
-            }
-
+            //for (int i = 0;i < N;i++)
+            //{
+            //    MessageBox.Show(Convert.ToString(cells[i, 0].number));
+            //}
+            button1.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -87,33 +87,32 @@ namespace MineSweeperGraphic
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
 
+            ////top left Form point
             //int f_x = this.Location.X;
             //int f_y = this.Location.Y;
+            ////position of the cursor
             //int c_x = Cursor.Position.X;
             //int c_y = Cursor.Position.Y;
+            ////top left point of PictureBox
             //int p_x = pictureBox1.Location.X + 10;
             //int p_y = pictureBox1.Location.Y + 30;
+            ////side of cell
             //int cell_side = pictureBox1.Width / 9;
-            
-            //if (field_drawn)
-            //{
-            //    if (c_x - f_x > p_x && c_x - f_x < p_x + cell_side && c_y - f_y > p_y && c_y - f_y < p_y + cell_side)
-            //    {
-            //        if (e.Button == MouseButtons.Right)
-            //        {
-            //            MessageBox.Show("right");
-            //        }
-            //        if (e.Button == MouseButtons.Left)
-            //        {
-            //            MessageBox.Show("left");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        // MessageBox.Show(Convert.ToString(Cursor.Position.X-magicNumber));
-            //    }
-            //}
 
+            if (!field_drawn)
+            {
+                return;
+            }
+            Cell cell = new();
+            int res = cell.FindCell(this, cells, e, N, ref mines);
+            if (res == 0)
+            {
+                MessageBox.Show("You died!");
+            }
+            else if (res == -1)
+            {
+                MessageBox.Show("restart program!");
+            }
         }
 
     }

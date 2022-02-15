@@ -20,14 +20,84 @@ namespace MineSweeperGraphic
         }
         public State cell_state = State.Closed;
 
-        public Cell(int x, int y, int side)
+        public Cell() { }
+
+        public int ChangeCellState(Cell[,] cells, int i, int j, MouseEventArgs e, int N, ref int mines)
         {
-            this.side = side;
-            this.x = x;
-            this.y = y;
+            if (e.Button == MouseButtons.Right)
+            {
+                if (cells[i, j].cell_state == State.Flag)
+                {
+                    cells[i, j].cell_state = State.Closed;
+                    return 1;
+                }
+                else
+                {
+                    cells[i, j].cell_state = State.Flag;
+                    mines--;
+                    return 1;
+                }
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                if (cells[i, j].number == -1)
+                {
+                    cells[i, j].cell_state = State.Bomb;
+                    return 0;
+                }
+                cells[i, j].cell_state = State.Opened;
+                for (int k = i - 1; k <= i + 1; k++)
+                {
+                    for (int l = j - 1; l <= j + 1; l++)
+                    {
+
+                        if (k < 0 || k > N - 1 || l < 0 || l > N - 1) continue;
+                        if (k == i && l == j) continue;
+                        if (cells[k, l].number == 0 && cells[k, l].cell_state != State.Opened)
+                            ChangeCellState(cells, k, l, e, N, ref mines);
+                        else
+                        {
+                            if (cells[k, l].number != -1) cells[k,l].cell_state = State.Opened;
+                        }
+                    }
+                }
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+            
         }
 
+        public int FindCell(Form f, Cell[,] cells, MouseEventArgs e, int N, ref int mines)
+        {
+            //top left Form point
+            int f_x = f.Location.X;
+            int f_y = f.Location.Y;
+            //position of the cursor
+            int c_x = Cursor.Position.X;
+            int c_y = Cursor.Position.Y;
+            //relative position
+            int r_x = c_x - f_x;
+            int r_y = c_y - f_y;
 
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    //need to search right cell somehow
+                    if (r_x > cells[i, j].x && r_x < cells[i, j].x + cells[i, j].side 
+                        && r_y > cells[i, j].y && r_y < cells[i, j].y + cells[i, j].side) 
+                    {
+                        return ChangeCellState(cells, i, j, e, N, ref mines);
+                        //return true;
+                    }
+                    
+                }
+            }
+            return -1;
+        }
 
     }
 }
