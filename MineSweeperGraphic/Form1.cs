@@ -22,20 +22,20 @@ namespace MineSweeperGraphic
             label1.Text = GetTimeString(stopWatch.Elapsed);
         }
 
-        internal void DrawField()
-        {
-            Pen pen = new Pen(Color.Black, 1);
-            Graphics picturebox1 = Graphics.FromHwnd(pictureBox1.Handle);
+        //internal void DrawField()
+        //{
+        //    Pen pen = new Pen(Color.Black, 1);
+        //    Graphics picturebox1 = Graphics.FromHwnd(pictureBox1.Handle);
 
-            int cell_side = pictureBox1.Width / 9;
-            for (int i = 0; i < N; i++)
-            {
-                for (int j = 0; j < N; j++)
-                {
-                    picturebox1.DrawRectangle(pen, cell_side * j, cell_side * i, cell_side, cell_side);
-                }
-            }
-        }
+        //    int cell_side = pictureBox1.Width / 9;
+        //    for (int i = 0; i < N; i++)
+        //    {
+        //        for (int j = 0; j < N; j++)
+        //        {
+        //            picturebox1.DrawRectangle(pen, cell_side * j, cell_side * i, cell_side, cell_side);
+        //        }
+        //    }
+        //}
 
         private string GetTimeString(TimeSpan elapsed)
         {
@@ -57,29 +57,18 @@ namespace MineSweeperGraphic
 
             stopWatch.Start();
 
-            DrawField();
+            Drawer drawer = new();
+            drawer.DrawField(pictureBox1, N);
             field_drawn = true;
 
             Generator gen = new Generator(this, pictureBox1, 
                 /*cells.GetUpperBound(0) + 1, cells.Length / (cells.GetUpperBound(0) + 1)*/N, N);
-            gen.GenerateCells(ref cells);
-            for (int i = 0; i < N; i++)
-            {
-                for (int j = 0; j < N; j++)
-                {
-                    MessageBox.Show("gencells\t" + Convert.ToString(cells[i, j].x) + "__-" +Convert.ToString(cells[i, j].y));
-                    //MessageBox.Show("gencells\t" + Convert.ToString(cells[i, j].side));
-                }
-            }
+            gen.GenerateCells(cells);
+           
             gen.GenerateBombs(mines, N, cells);
-            for (int i = 0; i < N; i++)
-            {
-                for (int j = 0; j < N; j++)
-                {
-                    MessageBox.Show("genbombs\t" + Convert.ToString(cells[i, j].cell_state));
-                }
-            }
+           
             gen.GenerateDigits(cells);
+
 
             button1.Enabled = false;
         }
@@ -103,28 +92,22 @@ namespace MineSweeperGraphic
             {
                 return;
             }
+            
             Cell cell = new();
-
-            for (int i=0; i<N; i++)
-            {
-                for (int j = 0; j < N; j++)
-                {
-                    MessageBox.Show("msclick\t"+Convert.ToString(cells[i, j].x) + Convert.ToString(cells[i, j].y));
-                }
-            }
-
             int res = cell.FindCell(this, cells, e, N, ref mines);
             if (res == 0)
             {
+                //
                 MessageBox.Show("You died!");
+
             }
             else if (res == -1)
             {
-                MessageBox.Show("restart program!");
+                MessageBox.Show("You pressed wrong button!");
             }
             else
             {
-                MessageBox.Show("Nice!");
+                //MessageBox.Show("Nice!");
             }
         }
 

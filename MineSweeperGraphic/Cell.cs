@@ -87,14 +87,9 @@ namespace MineSweeperGraphic
                 for (int j = 0; j < N; j++)
                 {
                     //need to search right cell somehow
-
-                    MessageBox.Show(Convert.ToString(cells[i,j].x) + "___" + Convert.ToString(cells[i, j].y));
-                    MessageBox.Show(Convert.ToString(r_x) + "___" + Convert.ToString(r_y));
-                    //MessageBox.Show("FindCell!");
                     if (r_x > cells[i, j].x && r_x < cells[i, j].x + cells[i, j].side 
                         && r_y > cells[i, j].y && r_y < cells[i, j].y + cells[i, j].side) 
                     {
-                        MessageBox.Show("FindCell!");
                         return ChangeCellState(cells, i, j, e, N, ref mines);
                         //return true;
                     }

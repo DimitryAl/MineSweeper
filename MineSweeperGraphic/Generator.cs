@@ -15,7 +15,7 @@
             this.cols = cols;
         }
 
-        public void GenerateCells(ref Cell[,] cells)
+        public void GenerateCells(/*ref*/ Cell[,] cells)
         {
             for (int i = 0; i < rows; i++)
             {
@@ -31,20 +31,16 @@
         //public void GenerateCell(Cell cell, int i, int j)
         public void GenerateCell(int i, int j, ref Cell cell)
         {
-            //top left Form point
-            int f_x = f.Location.X;                  
-            int f_y = f.Location.Y;
-            ////position of the cursor
-            //int c_x = Cursor.Position.X;
-            //int c_y = Cursor.Position.Y;
             //top left point of PictureBox
             int p_x = p.Location.X + 10;
             int p_y = p.Location.Y + 30;
             //side of cell
             int cell_side = p.Width / 9;
 
-            cell.x = f_x - p_x + i * cell_side;
-            cell.y = f_y - p_y + j * cell_side;
+            //cell.x = f_x - p_x + i * cell_side;
+            //cell.y = f_y - p_y + j * cell_side;
+            cell.x = p_x + i * cell_side;
+            cell.y = p_y + j * cell_side;
             cell.number = 0;
             cell.side = cell_side;
             cell.cell_state = Cell.State.Closed;
