@@ -11,18 +11,15 @@ namespace MineSweeperGraphic
         public int side = 0;
         public int x = 0, y = 0;
         public int number = 0;
-        enum State
+        public enum State
         {
             Opened,
             Closed,
             Flag,
             Bomb
         }
-        State cell_state = State.Closed;
+        public State cell_state = State.Closed;
 
-        //public Cell()
-        //{
-        //}
         public Cell(int x, int y, int side)
         {
             this.side = side;

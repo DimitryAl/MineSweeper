@@ -37,7 +37,7 @@ namespace MineSweeper
             }
         }
 
-        public void GenerateDigits()
+        internal void GenerateDigits()
         {
             int rows = cells.GetUpperBound(0) + 1;
             int column = cells.Length / rows;
@@ -68,7 +68,7 @@ namespace MineSweeper
             GenerateCellsProperty();
         }
 
-        public void GenerateBombs(int qnt)
+        internal void GenerateBombs(int qnt)
         {
             Random rnd = new Random();
 
@@ -79,7 +79,7 @@ namespace MineSweeper
             }
         }
 
-        public void ShowFieldCheat()
+        internal void ShowFieldCheat()
         {
             int rows = cells.GetUpperBound(0) + 1;
             int column = cells.Length / rows;
@@ -96,7 +96,7 @@ namespace MineSweeper
             }
         }
 
-        public void ShowField()
+        internal void ShowField()
         {
             int rows = cells.GetUpperBound(0) + 1;
             int column = cells.Length / rows;
@@ -127,7 +127,7 @@ namespace MineSweeper
             }
         }
 
-        public bool ChangeCellState(int x, int y, int input, ref int mines)
+        internal bool ChangeCellState(int x, int y, int input, ref int mines)
         {
             if (input == 2)
             {
