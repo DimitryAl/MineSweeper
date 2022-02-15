@@ -6,11 +6,30 @@ using System.Threading.Tasks;
 
 namespace MineSweeperGraphic
 {
-    internal struct Cell
+    public struct Cell
     {
-        public Cell()
+        public int side = 0;
+        public int x = 0, y = 0;
+        public int number = 0;
+        enum State
         {
+            Opened,
+            Closed,
+            Flag,
+            Bomb
         }
+        State cell_state = State.Closed;
+
+        //public Cell()
+        //{
+        //}
+        public Cell(int x, int y, int side)
+        {
+            this.side = side;
+            this.x = x;
+            this.y = y;
+        }
+
 
 
     }

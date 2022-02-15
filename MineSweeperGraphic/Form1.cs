@@ -2,15 +2,17 @@ namespace MineSweeperGraphic
 {
     public partial class Form1 : Form
     {
+        
+
         System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
         const int N = 9;
+        const int qnt = 10;
+        bool field_drawn = false;
+        Cell[,] cells = new Cell[N, N];
 
         public Form1()
         {
             InitializeComponent();
-            
-            //UpdateTime();
-            //DrawField();
 
             button1.Click += button1_Click;
         }
@@ -25,12 +27,12 @@ namespace MineSweeperGraphic
             Pen pen = new Pen(Color.Black, 1);
             Graphics picturebox1 = Graphics.FromHwnd(pictureBox1.Handle);
             
-            int cell_width = pictureBox1.Width / 9;
+            int cell_side = pictureBox1.Width / 9;
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < N; j++)
                 {
-                    picturebox1.DrawRectangle(pen, cell_width * j, cell_width * i, cell_width, cell_width);
+                    picturebox1.DrawRectangle(pen, cell_side * j, cell_side * i, cell_side, cell_side);
                 }
             }
         }
@@ -57,10 +59,19 @@ namespace MineSweeperGraphic
 
             DrawField();
 
+            field_drawn = true;
+            int rows = cells.GetUpperBound(0) + 1;
+            int column = cells.Length / rows;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    Generator gen = new();
+                    gen.InitGeneration(cells[i, j], );
+                }
+            }
+            //Generator.GenerateBombs(qnt, N, cells);
 
-            //MessageBox.Show("btn1");
-
-            //label1.Text = stopWatch.Elapsed.ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -83,27 +94,30 @@ namespace MineSweeperGraphic
             int f_y = this.Location.Y;
             int c_x = Cursor.Position.X;
             int c_y = Cursor.Position.Y;
-            int p_x = pictureBox1.Location.X;
-            int p_y = pictureBox1.Location.Y;
-
-            MessageBox.Show(Convert.ToString(f_x) + "   " + Convert.ToString(f_y) + "   " + Convert.ToString(c_x) + "   " + Convert.ToString(c_y) + "   " + Convert.ToString(p_x) + "   " + Convert.ToString(p_y));
-
-            //if (c_x - magicNumber > p_x && c_x - magicNumber < p_x + pictureBox1.Width && c_y - magicNumber > p_y && c_y - magicNumber < p_y + pictureBox1.Height)
-            //if (c_x - f_x > p_x && c_x - f_x < p_x + pictureBox1.Width)
+            int p_x = pictureBox1.Location.X + 10;
+            int p_y = pictureBox1.Location.Y + 30;
+            int cell_side = pictureBox1.Width / 9;
+            
+            if (field_drawn)
             {
-                if (e.Button == MouseButtons.Right)
+                if (c_x - f_x > p_x && c_x - f_x < p_x + cell_side && c_y - f_y > p_y && c_y - f_y < p_y + cell_side)
                 {
-                    MessageBox.Show("right");
+                    if (e.Button == MouseButtons.Right)
+                    {
+                        MessageBox.Show("right");
+                    }
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        MessageBox.Show("left");
+                    }
                 }
-                if (e.Button == MouseButtons.Left)
+                else
                 {
-                    MessageBox.Show("left");
+                    // MessageBox.Show(Convert.ToString(Cursor.Position.X-magicNumber));
                 }
             }
-            else
-            {
-               // MessageBox.Show(Convert.ToString(Cursor.Position.X-magicNumber));
-            }
+
         }
+
     }
 }
