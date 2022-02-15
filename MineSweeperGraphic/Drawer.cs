@@ -22,5 +22,20 @@ namespace MineSweeperGraphic
                 }
             }
         }
+
+        public void Clear(PictureBox pictureBox1)
+        {
+            Pen pen = new Pen(Color.Black, 1);
+            Graphics picturebox1 = Graphics.FromHwnd(pictureBox1.Handle);
+
+            picturebox1.DrawRectangle(pen, pictureBox1.Location.X, pictureBox1.Location.Y, pictureBox1.Width, pictureBox1.Height);
+
+        }
+    
+        public void DrawFlag(PictureBox pictureBox1)
+        {
+            
+        }
+
     }
 }
