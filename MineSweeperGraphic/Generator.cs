@@ -21,7 +21,6 @@
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    //GenerateCell(cells[i, j], i, j);
                     GenerateCell(i, j, ref cells[i, j]);
 
                 }
@@ -38,8 +37,6 @@
             //side of cell
             int cell_side = p.Width / 9;
 
-            //cell.x = f_x - p_x + i * cell_side;
-            //cell.y = f_y - p_y + j * cell_side;
             cell.x = p_x + i * cell_side;
             cell.y = p_y + j * cell_side;
             cell.number = 0;

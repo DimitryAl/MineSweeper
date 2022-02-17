@@ -100,23 +100,23 @@ namespace MineSweeperGraphic
             {
                 stopWatch.Stop();
                 MessageBox.Show("You died!");
-               // Drawer drawer = new();
-                //drawer.Clear(pictureBox1);
                 drawer.DrawField(N);
                 field_drawn = false;
                 button1.Enabled = true;
             }
-            else if (res == -1)
-            {
-                MessageBox.Show("You pressed wrong button!");
-            }
-            else
-            {
-                //MessageBox.Show("Nice!");
-                //drawing flags and digits
-            }
+            //else if (res == -1)
+            //{
+            //    MessageBox.Show("You pressed wrong button!");
+            //}
+            //else
+            //{
+            //    //MessageBox.Show("Nice!");
+            //    //drawing flags and digits
+            //}
+            label2.Text = $"Bomb counter = {mines}";
             if(mines == 0)
             {
+                stopWatch.Stop();
                 MessageBox.Show("You win");
                 field_drawn = false;
                 button1.Enabled = true;
