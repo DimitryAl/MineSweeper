@@ -58,8 +58,8 @@ namespace MineSweeperGraphic
             stopWatch.Restart();
             //stopWatch.Start();
 
-            Drawer drawer = new();
-            drawer.DrawField(pictureBox1, N);
+            Drawer drawer = new(pictureBox1);
+            drawer.DrawField(N);
             field_drawn = true;
 
             Generator gen = new Generator(this, pictureBox1, 
@@ -93,16 +93,16 @@ namespace MineSweeperGraphic
             {
                 return;
             }
-            
+            Drawer drawer = new(pictureBox1);
             Cell cell = new();
-            int res = cell.FindCell(this, cells, e, N, ref mines);
+            int res = cell.FindCell(this, cells, drawer, pictureBox1, e, N, ref mines);
             if (res == 0)
             {
                 stopWatch.Stop();
                 MessageBox.Show("You died!");
-                Drawer drawer = new();
+               // Drawer drawer = new();
                 //drawer.Clear(pictureBox1);
-                drawer.DrawField(pictureBox1, N);
+                drawer.DrawField(N);
                 field_drawn = false;
                 button1.Enabled = true;
             }
@@ -114,7 +114,6 @@ namespace MineSweeperGraphic
             {
                 //MessageBox.Show("Nice!");
                 //drawing flags and digits
-
             }
         }
 

@@ -32,6 +32,7 @@
         public void GenerateCell(int i, int j, ref Cell cell)
         {
             //top left point of PictureBox
+            //magic numbers 10, 30 are exist because of window border
             int p_x = p.Location.X + 10;
             int p_y = p.Location.Y + 30;
             //side of cell

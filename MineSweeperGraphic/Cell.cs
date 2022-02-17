@@ -22,19 +22,22 @@ namespace MineSweeperGraphic
 
         public Cell() { }
 
-        public int ChangeCellState(Cell[,] cells, int i, int j, MouseEventArgs e, int N, ref int mines)
+        public int ChangeCellState(Cell[,] cells, Drawer drawer, PictureBox pictureBox1, int i, int j, MouseEventArgs e, int N, ref int mines)
         {
             if (e.Button == MouseButtons.Right)
             {
                 if (cells[i, j].cell_state == State.Flag)
                 {
                     cells[i, j].cell_state = State.Closed;
+                    drawer.ClearCell(cells[i, j]);
+                    mines++;
                     return 1;
                 }
                 else
                 {
                     cells[i, j].cell_state = State.Flag;
                     mines--;
+                    drawer.DrawFlag(cells[i, j]/*, i, j*/);
                     return 1;
                 }
             }
@@ -54,7 +57,7 @@ namespace MineSweeperGraphic
                         if (k < 0 || k > N - 1 || l < 0 || l > N - 1) continue;
                         if (k == i && l == j) continue;
                         if (cells[k, l].number == 0 && cells[k, l].cell_state != State.Opened)
-                            ChangeCellState(cells, k, l, e, N, ref mines);
+                            ChangeCellState(cells, drawer, pictureBox1, k, l, e, N, ref mines);
                         else
                         {
                             if (cells[k, l].number != -1) cells[k,l].cell_state = State.Opened;
@@ -70,7 +73,7 @@ namespace MineSweeperGraphic
             
         }
 
-        public int FindCell(Form f, Cell[,] cells, MouseEventArgs e, int N, ref int mines)
+        public int FindCell(Form f, Cell[,] cells, Drawer drawer, PictureBox pictureBox1, MouseEventArgs e, int N, ref int mines)
         {
             //top left Form point
             int f_x = f.Location.X;
@@ -90,7 +93,7 @@ namespace MineSweeperGraphic
                     if (r_x > cells[i, j].x && r_x < cells[i, j].x + cells[i, j].side 
                         && r_y > cells[i, j].y && r_y < cells[i, j].y + cells[i, j].side) 
                     {
-                        return ChangeCellState(cells, i, j, e, N, ref mines);
+                        return ChangeCellState(cells, drawer, pictureBox1, i, j, e, N, ref mines);
                         //return true;
                     }
                     
