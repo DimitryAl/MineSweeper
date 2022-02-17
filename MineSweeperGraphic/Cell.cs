@@ -46,9 +46,11 @@ namespace MineSweeperGraphic
                 if (cells[i, j].number == -1)
                 {
                     cells[i, j].cell_state = State.Bomb;
+                    drawer.DrawBomb(cells[i, j]);
                     return 0;
                 }
                 cells[i, j].cell_state = State.Opened;
+                drawer.DrawDigit(cells[i, j], cells[i, j].number);
                 for (int k = i - 1; k <= i + 1; k++)
                 {
                     for (int l = j - 1; l <= j + 1; l++)
@@ -60,7 +62,11 @@ namespace MineSweeperGraphic
                             ChangeCellState(cells, drawer, pictureBox1, k, l, e, N, ref mines);
                         else
                         {
-                            if (cells[k, l].number != -1) cells[k,l].cell_state = State.Opened;
+                            if (cells[k, l].number != -1)
+                            {
+                                cells[k, l].cell_state = State.Opened;
+                                drawer.DrawDigit(cells[k, l], cells[k, l].number);
+                            }
                         }
                     }
                 }

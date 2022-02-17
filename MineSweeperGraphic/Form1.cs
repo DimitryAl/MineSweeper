@@ -115,6 +115,12 @@ namespace MineSweeperGraphic
                 //MessageBox.Show("Nice!");
                 //drawing flags and digits
             }
+            if(mines == 0)
+            {
+                MessageBox.Show("You win");
+                field_drawn = false;
+                button1.Enabled = true;
+            }
         }
 
     }
